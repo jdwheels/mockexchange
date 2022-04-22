@@ -16,6 +16,7 @@ import org.hibernate.annotations.FetchProfile
 import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.NotFound
 import org.hibernate.annotations.NotFoundAction
+import org.hibernate.annotations.Type
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -188,7 +189,8 @@ class MockPost : MockEntity<Long> {
     @XStreamAlias("Body")
     @field:NotNull
     @Lob
-    @Column(columnDefinition = "text", nullable = false)
+    @Type(type = "org.hibernate.type.TextType")
+    @Column(nullable = false)
     var body: String? = null
 
     @Field
