@@ -2,6 +2,7 @@ name: GitHub Actions Demo
 on: [push]
 env:
   ECR_REPOSITORY: mockexchange-posts-api
+  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
   IMAGE_TAG: ${{ github.sha }}
 jobs:
 
@@ -32,20 +33,13 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         with:
           gradle-version: current
-      - run: gradle mockexchange-posts-api:bootBuildImage --imageName ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG
-
-
-
+      - run: gradle mockexchange-posts-api:bootBuildImage --imageName $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker push ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG
-          docker tag ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:latest
-          echo "::set-output name=image::${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
