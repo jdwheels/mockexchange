@@ -1,0 +1,50 @@
+name: GitHub Actions Demo
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+#      - name: Validate Gradle wrapper
+#        uses: gradle/wrapper-validation-action@v1
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: current
+          arguments: build
+#  deploy:
+#    needs:
+#      - build
+#    name: Upload to Amazon S3
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Download dist
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: dist
+#      - run: |
+#          ls ${{ github.workspace }}
+#      - name: Configure AWS Credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+##          role-to-assume: arn:aws:iam::123456789100:role/my-github-actions-role
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region:  ${{ secrets.AWS_REGION }}
+#      - name: Copy files to the test website with the AWS CLI
+#        env:
+#          UI_BUCKET: ${{ secrets.UI_BUCKET }}
+#        run: |
+#          aws s3 sync --delete . $UI_BUCKET
+#      - name: Invalidate the cache
+#        env:
+#          UI_DISTRIBUTION: ${{ secrets.UI_DISTRIBUTION }}
+#        run: |
+#          aws cloudfront create-invalidation --distribution-id $UI_DISTRIBUTION --paths "/*"
