@@ -1,0 +1,102 @@
+scalar Instant
+
+enum Direction {
+    ASC,
+    DESC
+}
+
+type Query {
+    mockPosts(sortDir: Direction = ASC, offset: Int = 0, limit: Int = 20, sortBy: String = "id"): Page
+    users: [User]
+}
+
+type Page {
+    content: [MockPostQuestion2]
+}
+
+type MockPostQuestion2 {
+    id: ID
+    title: String
+    postType: PostType
+    score: Int
+    answerCount: Int
+    viewCount: Int
+    tags: [String]
+    creationDate: Instant
+    lastEditDate: Instant
+    lastActivityDate: Instant
+    closedDate: Instant
+    communityOwnedDate: Instant
+    ownerUser: MockUserSummary
+    lastEditorUser: MockUserSummary
+}
+
+type MockUserSummary {
+    id: ID
+    displayName: String
+    reputation: Int
+    profileImageUrl: String
+
+}
+#
+
+input Sort {
+    sorted: Boolean,
+    unsorted: Boolean,
+    empty: Boolean
+}
+
+type MockPost {
+    id: ID
+    postType: PostType
+    parentId: Int
+    acceptedAnswerId: Int
+    ownerUserId: Int
+    ownerUser: User
+    ownerDisplayName: String
+    lastEditorUserId: String
+    lastEditorUser: User
+    lastEditorDisplayName: String
+    score: Int
+    title: String
+    body: String
+    contentLicense: String
+    allTags: String
+    tags: [String]
+    creationDate: Instant!
+    lastEditDate: Instant
+    lastActivityDate: Instant
+    closedDate: Instant
+    communityOwnedDate: Instant
+    viewCount: Int
+    commentCount: Int
+    answerCount: Int
+    favoriteCount: Int
+}
+
+type User {
+    id: ID!
+    reputation: Int
+    creationDate: String
+    displayName: String
+    lastAccessDate: String
+    websiteUrl: String
+    location: String
+    aboutMe: String
+    views: Int
+    upVotes: Int
+    downVotes: Int
+    accountId: Int
+    profileImageUrl: String
+}
+
+enum PostType {
+    NA
+    QUESTION
+    ANSWER
+    TYPE_3
+    TYPE_4
+    TYPE_5
+    TYPE_6
+    TYPE_7
+}

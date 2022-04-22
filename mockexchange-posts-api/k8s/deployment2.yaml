@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-api
+  namespace: mockexchange
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: posts-api
+  template:
+    metadata:
+      labels:
+        app: posts-api
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: posts-api
+          image: 261553363186.dkr.ecr.us-east-1.amazonaws.com/mockexchange-posts-api:latest
+          readinessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              port: http
+              path: /actuator/health/readiness
+          resources:
+            requests:
+              cpu: "2"
+              memory: 3G
+#            limits:
+#              cpu: 1000m
+#              memory: 2Gi
+          ports:
+            - containerPort: 8081
+              name: http
+          envFrom:
+            - configMapRef:
+                name: db
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: user
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: pass
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: github-oauth
+                  key: client_id
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENTSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: github-oauth
+                  key: client_secret
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_REDIRECTURI
+              value: https://mockexchange.test.trivialepic.com/login/oauth2/code/github
+            - name: POSTSAPI_COOKIEDOMAIN
+              value: test.trivialepic.com
+            - name: POSTSAPI_LOGINSUCCESSURL
+              value: https://mockexchange.test.trivialepic.com
+            - name: SERVER_SHUTDOWN
+              value: graceful
+            - name: SPRING_LIFECYCLE_TIMEOUT_PER_SHUTDOWN_PHASE
+              value: 35s

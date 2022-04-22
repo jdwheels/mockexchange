@@ -1,0 +1,33 @@
+server:
+  port: 8081
+spring:
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: annotated
+      default-media-type: application/json
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          github:
+#            redirect-uri: http://localhost:3200
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: true
+    show-sql: true
+  flyway:
+    enabled: true
+    locations:
+      - classpath:com/trivialepic/mockoverflow/objects/db/migration/common
+      - classpath:com/trivialepic/mockoverflow/objects/db/migration/{vendor}
+  graphql:
+    schema:
+      printer:
+        enabled: true
+    graphiql:
+      enabled: true
+  session:
+    jdbc:
+      initialize-schema: always

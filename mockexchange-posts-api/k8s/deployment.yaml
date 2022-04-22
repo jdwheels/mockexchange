@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-api
+  namespace: mockoverflow
+spec:
+  selector:
+    matchLabels:
+      app: posts-api
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: posts-api
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: posts-api
+          imagePullPolicy: Always
+          image: docker.k8s.local/jdwheels/mockoverflow-posts-api
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              port: api
+              path: /actuator/health/readiness
+          ports:
+            - name: api
+              containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://mockoverflow-postgresql-ha-pgpool.retrorigs.svc.cluster.local:5432/retrorigs
+            - name: SPRING_DATASOURCE_USERNAME
+              value: retrorigs_user
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: someDbPass
+            - name: SERVER_PORT
+              value: '8080'
+#            - name: SPRING_JPA_SHOWSQL
+#              value: 'false'
+#            - name: SPRING_DATASOURCE_HIKARI_VALIDATIONTIMEOUT
+#              value: '20000'
+            - name: SERVER_SHUTDOWN
+              value: graceful
+            - name: SPRING_LIFECYCLE_TIMEOUT_PER_SHUTDOWN_PHASE
+              value: 35s

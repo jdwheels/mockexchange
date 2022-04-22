@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: mockexchange
+  name: populator
+data:
+  X_S3_BUCKET: s3://mockexchange
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: mockexchange
+  name: populator
+spec:
+  template:
+    metadata:
+      labels:
+        app: populator
+    spec:
+      serviceAccountName: stackexchange-s3
+      restartPolicy: Never
+      volumes:
+        - name: files
+          emptyDir: { }
+      initContainers:
+        - name: download
+          image: amazon/aws-cli
+#          workingDir: /files
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          envFrom:
+            - configMapRef:
+                name: populator
+          args:
+            - s3
+            - cp
+            - --content-encoding
+            - utf-8
+            - $(X_S3_BUCKET)/
+            - /files
+            - --recursive
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 3817Mi
+            limits:
+              cpu: 2000m
+              memory: 3817Mi
+      containers:
+        - name: populator
+#          image: 261553363186.dkr.ecr.us-east-1.amazonaws.com/trivialepic:latest
+          image: 261553363186.dkr.ecr.us-east-1.amazonaws.com/trivialepic-populator:latest
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          envFrom:
+            - configMapRef:
+                name: populator
+            - configMapRef:
+                name: db
+#          command:
+#            - cat
+#          args:
+#            - $(X_FILE_NAME)
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: user
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: pass
+            - name: MOCKOVERFLOW_POPULATOR_BADGESFILE
+              value: file:/files/Badges.xml
+            - name: MOCKOVERFLOW_POPULATOR_COMMENTSFILE
+              value: file:/files/Comments.xml
+            - name: MOCKOVERFLOW_POPULATOR_POSTSHISTORYFILE
+              value: file:/files/PostHistory.xml
+            - name: MOCKOVERFLOW_POPULATOR_POSTLINKSFILE
+              value: file:/files/PostLinks.xml
+#            - name: MOCKOVERFLOW_POPULATOR_POSTSFILE
+#              value: file:/files/Posts.xml
+            - name: MOCKOVERFLOW_POPULATOR_TAGSFILE
+              value: file:/files/Tags.xml
+            - name: MOCKOVERFLOW_POPULATOR_USERSFILE
+              value: file:/files/Users.xml
+            - name: MOCKOVERFLOW_POPULATOR_VOTESFILE
+              value: file:/files/Votes.xml
+            - name: SPRING_JPA_SHOWSQL
+              value: 'false'
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 3817Mi
+            limits:
+              cpu: 2000m
+              memory: 3817Mi

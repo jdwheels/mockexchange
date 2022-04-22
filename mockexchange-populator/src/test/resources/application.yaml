@@ -1,0 +1,11 @@
+
+mockoverflow:
+  populator:
+    post-links-file: classpath:PostLinks.xml
+    posts-file: classpath:Posts.xml
+    posts-history-file: classpath:PostHistory.xml
+    votes-file: classpath:Votes.xml
+    tags-file: classpath:Tags.xml
+    users-file: classpath:Users.xml
+    badges-file: classpath:Badges.xml
+    comments-file: classpath:Comments.xml

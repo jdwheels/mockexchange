@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: mockexchange
+  name: populator
+data:
+  X_S3_BUCKET: s3://mockexchange
+  X_FILE_NAME: softwareengineering.stackexchange.com.7z
+  X_FILE_URL: https://archive.org/download/stackexchange/softwareengineering.stackexchange.com.7z
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: mockexchange
+  name: populator
+spec:
+  template:
+    metadata:
+      labels:
+        app: populator
+    spec:
+      serviceAccountName: stackexchange-s3
+      restartPolicy: Never
+      volumes:
+        - name: files
+          emptyDir: { }
+      initContainers:
+        - name: fetch
+          image: 261553363186.dkr.ecr.us-east-1.amazonaws.com/trivialepic:latest
+          workingDir: /files
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          envFrom:
+            - configMapRef:
+                name: populator
+          args:
+            - -L
+            - -o
+            - $(X_FILE_NAME)
+            - $(X_FILE_URL)
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 3817Mi
+            limits:
+              cpu: 2000m
+              memory: 3817Mi
+        - name: extract
+          image: 261553363186.dkr.ecr.us-east-1.amazonaws.com/trivialepic:latest
+          workingDir: /files
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          envFrom:
+            - configMapRef:
+                name: populator
+          command:
+            - 7z
+          args:
+            - x
+            - $(X_FILE_NAME)
+            - -oupload
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 3817Mi
+            limits:
+              cpu: 2000m
+              memory: 3817Mi
+      containers:
+        - name: upload
+          image: amazon/aws-cli
+          workingDir: /files
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          envFrom:
+            - configMapRef:
+                name: populator
+          args:
+            - s3
+            - cp
+            - upload
+            - $(X_S3_BUCKET)
+            - --recursive
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 3817Mi
+            limits:
+              cpu: 2000m
+              memory: 3817Mi
