@@ -36,7 +36,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         with:
           gradle-version: current
-      - run: gradle mockexchange-posts-api:bootBuildImage --imageName $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      - run: gradle mockexchange-posts-api:bootBuildImage --imageName ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG
 
 
 
@@ -45,7 +45,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker push ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push ${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:latest
+          echo "::set-output name=image::${{ env.ECR_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG"
