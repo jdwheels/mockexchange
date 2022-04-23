@@ -11,5 +11,6 @@ include(
     ":mockexchange-populator",
     ":mockexchange-objects",
     ":mockexchange-posts-api",
+    ":mockexchange-comments-api",
     ":mockexchange-search",
 )

@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: true
+    show-sql: true
+  devtools:
+    livereload:
+      enabled: false
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: annotated
+      default-media-type: application/json
+server:
+  port: 8083

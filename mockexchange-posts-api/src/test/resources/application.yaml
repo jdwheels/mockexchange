@@ -6,6 +6,7 @@ spring:
       default-media-type: application/json
   flyway:
     locations: classpath:/com/trivialepic/mockoverflow/objects/db/migration/common
+#    default-schema: test
   security:
     oauth2:
       client:
@@ -13,3 +14,6 @@ spring:
           github:
             client-id: test
             client-secret: test
+#  datasource:
+#    hikari:
+#      schema: test

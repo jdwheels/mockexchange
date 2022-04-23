@@ -36,4 +36,17 @@ interface PostsRepository : JpaRepository<MockPost, Long>, QuerydslPredicateExec
                 " where post.postType = :postType"
     )
     fun x(@Param("postType") postType: MockPostType, pageable: Pageable): Page<MockPostQuestion2>
+
+    @Query(
+        value = "select post FROM MockPost post " +
+                "left outer join fetch post.ownerUser ownerUser " +
+                "left outer join fetch post.lastEditorUser lastEditorUser " +
+                "where post.postType = com.trivialepic.mockexchange.objects.posts.MockPostType.ANSWER " +
+                "and post.parentId = :parentId " +
+                "order by post.score desc ",
+        countQuery = "select count(post) FROM MockPost post " +
+                "where post.postType = com.trivialepic.mockexchange.objects.posts.MockPostType.ANSWER " +
+                "and post.parentId = :parentId"
+    )
+    fun xy(@Param("parentId") parentId: Long, pageable: Pageable): Page<MockPost>
 }

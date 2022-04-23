@@ -2,6 +2,7 @@ package com.trivialepic.mockexchange.objects.posts
 
 import com.thoughtworks.xstream.annotations.XStreamAlias
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute
+import org.hibernate.annotations.Type
 import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime
 import java.util.*
@@ -68,8 +69,7 @@ class MockPostHistory(
     @XStreamAsAttribute
     @XStreamAlias("Text")
     @Lob
-    @Column(columnDefinition = "text")
-    @field:Size(max = 600)
+    @Type(type = "org.hibernate.type.TextType")
     val text: String,
 
     @XStreamAsAttribute
