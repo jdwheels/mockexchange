@@ -13,4 +13,5 @@ include(
     ":mockexchange-posts-api",
     ":mockexchange-comments-api",
     ":mockexchange-search",
+    ":mockexchange-bff",
 )
