@@ -6,7 +6,7 @@
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.7.0-M3/279cbebaba5b753a26ad6a7860ba9ddb1359cc6f/spring-boot-configuration-processor-2.7.0-M3.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.7.0-RC1/440ee5455dd52ab192c3a81e069c178b33a46877/spring-boot-configuration-processor-2.7.0-RC1.jar" />
         </processorPath>
         <module name="mockexchange.mockexchange-populator.main" />
       </profile>

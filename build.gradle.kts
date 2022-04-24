@@ -6,12 +6,8 @@ buildscript {
     }
 }
 
-repositories {
-    maven { url = uri("https://repo.spring.io/milestone") }
-}
-
 plugins {
-    id("org.springframework.boot") version "2.7.0-M3" apply false
+    id("org.springframework.boot") version "2.7.0-RC1" apply false
     id("io.spring.dependency-management") version "1.0.11.RELEASE" apply false
     kotlin("jvm") version "1.6.20" apply false
     kotlin("plugin.spring") version "1.6.20" apply false
@@ -29,14 +25,14 @@ allprojects {
     }
 
     tasks.withType<JavaCompile> {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
+        sourceCompatibility = JavaVersion.VERSION_11.toString()
+        targetCompatibility = JavaVersion.VERSION_11.toString()
     }
 
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "11"
+            jvmTarget = JavaVersion.VERSION_11.toString()
         }
     }
 
@@ -58,10 +54,6 @@ allprojects {
 }
 
 subprojects {
-    repositories {
-        mavenCentral()
-    }
-
     apply {
         plugin("io.spring.dependency-management")
         plugin("idea")
