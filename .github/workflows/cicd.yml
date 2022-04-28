@@ -3,10 +3,6 @@ on:
   push:
     branches:
       - actions
-env:
-  ECR_REPOSITORY: mockexchange-posts-api
-  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-  IMAGE_TAG: ${{ github.sha }}
 jobs:
   push_image:
     uses: ./.github/workflows/deploy_api.yaml
@@ -14,3 +10,8 @@ jobs:
       module: mockexchange-posts-api
       ecr_repository: mockexchange-posts-api
       tag: ${{ github.sha }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
