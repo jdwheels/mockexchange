@@ -8,6 +8,7 @@ on:
       - '**.gradle'
       - '**.kts'
       - '**/resources/application*'
+      - '**/.github'
   pull_request:
     branches:
       - main
@@ -17,6 +18,7 @@ on:
       - '**.gradle'
       - '**.kts'
       - '**/resources/application*'
+      - '**/.github'
 jobs:
   unit_tests:
     name: Unit tests
