@@ -2,7 +2,9 @@ name: GitHub Actions Demo
 on:
   push:
     branches:
-      - actions
+      - main
+    paths:
+      - '**/mockexchange-posts-api/**'
 jobs:
   push_image:
     uses: ./.github/workflows/deploy_api.yaml
