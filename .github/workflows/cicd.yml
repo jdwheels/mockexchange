@@ -1,5 +1,8 @@
 name: GitHub Actions Demo
-on: [push]
+on:
+  push:
+    branches:
+      - main
 env:
   ECR_REPOSITORY: mockexchange-posts-api
   ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
