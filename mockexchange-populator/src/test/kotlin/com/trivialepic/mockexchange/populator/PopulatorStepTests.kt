@@ -22,6 +22,7 @@ class PopulatorStepTests {
         private fun testSteps() = Stream.of(
             Arguments.of("posts", 37),
             Arguments.of("postHistory", 95),
+            Arguments.of("postLinks", 0),
             Arguments.of("tags", 2),
             Arguments.of("votes", 789),
             Arguments.of("comments", 106),

@@ -1,0 +1,122 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "mockexchange.fullname" . }}
+  labels:
+    {{- include "mockexchange.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "mockexchange.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "mockexchange.serviceAccountName" . }}
+      automountServiceAccountToken: false
+      restartPolicy: Never
+      volumes:
+        - name: files
+          emptyDir: { }
+      {{- if or .Values.fetch.enabled .Values.s3.enabled }}
+      initContainers:
+        {{- if .Values.fetch.enabled }}
+        {{- if .Values.fetch.download.enabled }}
+        - name: download
+          image: {{ .Values.fetch.download.image }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          workingDir: /files
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          args:
+            - -L
+            - -o{{ .Values.fetch.fileName }}
+            - {{ .Values.fetch.fromUrl }}
+        {{- end }}
+        {{- if .Values.fetch.extract.enabled }}
+        - name: extract
+          image: {{ .Values.fetch.extract.image }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          workingDir: /files
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          command:
+            - 7za
+          args:
+            - x
+            - {{ .Values.fetch.fileName }}
+            - -oupload
+        {{- end }}
+        {{- end -}}
+        {{ with .Values.s3 }}
+        {{- if .upload.enabled }}
+        - name: s3-upload
+          image: {{ .image }}
+          resources:
+            {{- toYaml $.Values.resources | nindent 12 }}
+          workingDir: /files
+          {{- if and .accessKeyId .secretAccessKey }}
+          envFrom:
+            - secretRef:
+                name: {{ include "mockexchange.fullname" $ }}-s3
+          {{- end }}
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          args:
+            - s3
+            {{- if .endpointUrl }}
+            - --endpoint-url={{ .endpointUrl }}
+            {{- end }}
+            {{- if not .secure }}
+            - --no-verify-ssl
+            {{- end }}
+            - cp
+            - upload
+            - {{ .bucket }}/{{ default $.Release.Name .upload.path }}
+            - --recursive
+        {{- end }}
+        {{- if .download.enabled }}
+        - name: s3-download
+          image: {{ .image }}
+          resources:
+            {{- toYaml $.Values.resources | nindent 12 }}
+          workingDir: /files
+          {{- if and .accessKeyId .secretAccessKey }}
+          envFrom:
+            - secretRef:
+                name: {{ include "mockexchange.fullname" $ }}-s3
+          {{- end }}
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          args:
+            - s3
+            {{- if .endpointUrl }}
+            - --endpoint-url={{ .endpointUrl }}
+            {{- end }}
+            {{- if not .secure }}
+            - --no-verify-ssl
+            {{- end }}
+            - cp
+            - {{ .bucket }}/{{ default $.Release.Name .download.path }}
+            - .
+            - --recursive
+        {{- end }}
+        {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          volumeMounts:
+            - mountPath: /files
+              name: files
+          envFrom:
+            - secretRef:
+                name: {{ include "mockexchange.fullname" . }}-database
+            - configMapRef:
+                name: {{ include "mockexchange.fullname" . }}-batch
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

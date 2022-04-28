@@ -29,35 +29,35 @@ class PopulatorBatchConfig(private val jobBuilderFactory: JobBuilderFactory,
                            private val properties: PopulatorProperties) {
 
     @Bean
-    @ConditionalOnProperty("mockoverflow.populator.posts-file")
+    @ConditionalOnProperty("${PopulatorProperties.PREFIX}.posts-file")
     fun postsStep() = itemStep<MockPost>("posts", properties.postsFile)
 
     @Bean
-    @ConditionalOnProperty("mockoverflow.populator.posts-history-file")
-    fun postHistoryStep() = itemStep<MockPostHistory>("postHistory", properties.postsHistoryFile)
+    @ConditionalOnProperty("${PopulatorProperties.PREFIX}.post-history-file")
+    fun postHistoryStep() = itemStep<MockPostHistory>("postHistory", properties.postHistoryFile)
 
     @Bean
-    @ConditionalOnProperty("mockoverflow.populator.post-links-file")
+    @ConditionalOnProperty("${PopulatorProperties.PREFIX}.post-links-file")
     fun postLinksStep() = itemStep<MockPostLink>("postLinks", properties.postLinksFile)
 
     @Bean
-    @ConditionalOnProperty("mockoverflow.populator.tags-file")
+    @ConditionalOnProperty("${PopulatorProperties.PREFIX}.tags-file")
     fun tagsStep() = itemStep<MockTag>("tags", properties.tagsFile)
 
     @Bean
-    @ConditionalOnProperty("mockoverflow.populator.votes-file")
+    @ConditionalOnProperty("${PopulatorProperties.PREFIX}.votes-file")
     fun votesStep() = itemStep<MockVote>("votes", properties.votesFile)
 
     @Bean
-    @ConditionalOnProperty("mockoverflow.populator.users-file")
+    @ConditionalOnProperty("${PopulatorProperties.PREFIX}.users-file")
     fun usersStep() = itemStep<MockUser>("users", properties.usersFile)
 
     @Bean
-    @ConditionalOnProperty("mockoverflow.populator.badges-file")
+    @ConditionalOnProperty("${PopulatorProperties.PREFIX}.badges-file")
     fun badgesStep() = itemStep<MockBadge>("badge", properties.badgesFile)
 
     @Bean
-    @ConditionalOnProperty("mockoverflow.populator.comments-file")
+    @ConditionalOnProperty("${PopulatorProperties.PREFIX}.comments-file")
     fun commentsStep() = itemStep<MockComment>("comments", properties.commentsFile)
 
     private inline fun <reified T> itemStep(stepName: String, inputFile: Resource?): Step {

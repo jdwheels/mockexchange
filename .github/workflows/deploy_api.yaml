@@ -45,7 +45,7 @@ jobs:
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
       - name: Build image
-        run: ./gradlew ${{ inputs.module }}:bootBuildImage --imageName $IMAGE_NAME:$IMAGE_TAG
+        run: ./gradlew ${{ inputs.module }}:bootBuildImage --imageName $IMAGE_NAME:$IMAGE_TAG -x test
       - name: Tag and push image to Amazon ECR
         id: build-image
         run: |

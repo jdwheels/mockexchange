@@ -1,9 +1,9 @@
 
-mockoverflow:
+mockexchange:
   populator:
-    post-links-file: classpath:PostLinks.xml
+    post-links-file: classpath:test/PostLinks.xml
     posts-file: classpath:test/Posts.xml
-    posts-history-file: classpath:test/PostHistory.xml
+    post-history-file: classpath:test/PostHistory.xml
     votes-file: classpath:test/Votes.xml
     tags-file: classpath:test/Tags.xml
     users-file: classpath:test/Users.xml

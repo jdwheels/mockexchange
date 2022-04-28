@@ -8,8 +8,11 @@ import javax.validation.constraints.NotNull
 
 @Component
 @Validated
-@ConfigurationProperties("mockoverflow.populator")
+@ConfigurationProperties(PopulatorProperties.PREFIX)
 class PopulatorProperties {
+    companion object {
+        const val PREFIX = "mockexchange.populator"
+    }
     var usersFile: @NotNull Resource? = null
     var postsFile: @NotNull Resource? = null
     var commentsFile: @NotNull Resource? = null
@@ -17,5 +20,5 @@ class PopulatorProperties {
     var votesFile: @NotNull Resource? = null
     var badgesFile: @NotNull Resource? = null
     var postLinksFile: @NotNull Resource? = null
-    var postsHistoryFile: @NotNull Resource? = null
+    var postHistoryFile: @NotNull Resource? = null
 }

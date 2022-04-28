@@ -20,8 +20,8 @@ spring:
   flyway:
     enabled: true
     locations:
-      - classpath:com/trivialepic/mockoverflow/objects/db/migration/common
-      - classpath:com/trivialepic/mockoverflow/objects/db/migration/{vendor}
+      - classpath:com/trivialepic/mockexchange/objects/db/migration/common
+      - classpath:com/trivialepic/mockexchange/objects/db/migration/{vendor}
   graphql:
     schema:
       printer:

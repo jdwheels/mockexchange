@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<posts>
-    <row Id="1" PostTypeId="1" AcceptedAnswerId="13" CreationDate="2010-09-01T19:34:48.000" Score="100" ViewCount="59408" Body="&lt;p&gt;A coworker of mine believes that &lt;em&gt;any&lt;/em&gt; use of in-code comments (ie, not javadoc style method or class comments) is a &lt;a href=&quot;http://en.wikipedia.org/wiki/Code_smell&quot;&gt;code smell&lt;/a&gt;.  What do you think?&lt;/p&gt;&#xA;" OwnerUserId="6" LastEditorUserId="226" LastEditDate="2011-11-25T22:32:41.300" LastActivityDate="2012-11-27T19:29:27.740" Title="&quot;Comments are a code smell&quot;" Tags="&lt;comments&gt;&lt;anti-patterns&gt;" AnswerCount="34" CommentCount="10" FavoriteCount="76" ClosedDate="2012-11-27T20:11:51.580" CommunityOwnedDate="2011-01-31T09:04:54.130" ContentLicense="CC BY-SA 2.5" />
-</posts>
