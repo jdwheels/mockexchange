@@ -48,19 +48,7 @@ spec:
                 secretKeyRef:
                   name: db-secret
                   key: pass
-#            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENTID
-#              valueFrom:
-#                secretKeyRef:
-#                  name: github-oauth
-#                  key: client_id
-#            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENTSECRET
-#              valueFrom:
-#                secretKeyRef:
-#                  name: github-oauth
-#                  key: client_secret
-#            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_REDIRECTURI
-#              value: https://mockexchange.test.trivialepic.com/login/oauth2/code/github
-            - name: COMMENTSSAPI_COOKIEDOMAIN
+            - name: COMMENTSAPI_COOKIEDOMAIN
               value: test.trivialepic.com
             - name: POSTSAPI_LOGINSUCCESSURL
               value: https://mockexchange.test.trivialepic.com
