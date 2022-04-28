@@ -26,7 +26,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: temurin
       - name: Setup Gradle
-        uses: ./.github/workflows/jdk_gradle.yaml
+        uses: gradle/gradle-build-action@v2
       - name: Run tests
         run: ./gradlew test
