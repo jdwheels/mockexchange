@@ -1,14 +1,14 @@
 on:
   workflow_call:
-#    secrets:
-#      ECR_REGISTRY:
-#        required: true
-#      AWS_ACCESS_KEY_ID:
-#        required: true
-#      AWS_SECRET_ACCESS_KEY:
-#        required: true
-#      AWS_REGION:
-#        required: true
+    secrets:
+      ECR_REGISTRY:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_REGION:
+        required: true
     inputs:
       module:
         required: true
