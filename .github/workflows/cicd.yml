@@ -11,5 +11,6 @@ jobs:
   push_image:
     uses: ./.github/workflows/deploy_api.yaml
     with:
+      module: mockexchange-posts-api
       ecr_repository: mockexchange-posts-api
       tag: ${{ github.sha }}
