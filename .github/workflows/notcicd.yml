@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - actions
-    paths:
-      - '**/mockexchange-comments-api/**'
+#    paths:
+#      - '**/mockexchange-comments-api/**'
 jobs:
   push_image:
     uses: ./.github/workflows/deploy_api.yaml
