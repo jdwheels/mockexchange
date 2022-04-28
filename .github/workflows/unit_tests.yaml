@@ -19,6 +19,7 @@ on:
       - '**/resources/application*'
 jobs:
   unit_tests:
+    name: Unit tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,4 +33,5 @@ jobs:
       - name: Run Tests
         uses: gradle/gradle-build-action@v2
         with:
+          gradle-version: 7.4
           arguments: test
