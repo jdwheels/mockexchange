@@ -27,6 +27,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Gradle
-        uses: ./github/workflows/jdk_gradle.yaml
+        uses: ./.github/workflows/jdk_gradle.yaml
       - name: Run tests
         run: ./gradlew test
