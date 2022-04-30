@@ -13,10 +13,9 @@ spec:
       {{- include "mockexchange-posts-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        checksum/database: {{ include (print $.Template.BasePath "/database-secret.yaml") . | sha256sum }}
+        checksum/oauth: {{ include (print $.Template.BasePath "/oauth-secret.yaml") . | sha256sum }}
       labels:
         {{- include "mockexchange-posts-api.selectorLabels" . | nindent 8 }}
     spec:
@@ -38,12 +37,16 @@ spec:
               containerPort: 8080
               protocol: TCP
           livenessProbe:
-            initialDelaySeconds: 30
+            {{- if .Values.liveness.initialDelaySeconds }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            {{- end }}
             httpGet:
               path: /actuator/health/liveness
               port: http
           readinessProbe:
-            initialDelaySeconds: 30
+            {{- if .Values.readiness.initialDelaySeconds }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            {{- end }}
             httpGet:
               path: /actuator/health/readiness
               port: http
@@ -63,6 +66,10 @@ spec:
               value: graceful
             - name: SPRING_LIFECYCLE_TIMEOUT_PER_SHUTDOWN_PHASE
               value: 35s
+            {{- range .Values.extraEnv }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
