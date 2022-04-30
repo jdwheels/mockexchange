@@ -1,5 +1,0 @@
-{{/*{{- include "mylibchart.configmap" (list .Values.ijk "mychart.configmap") -}}*/}}
-{{/*{{- define "mychart.configmap" -}}*/}}
-{{/*data:*/}}
-{{/*  myvalue: "Hello World"*/}}
-{{/*{{- end -}}*/}}

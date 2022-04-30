@@ -1,0 +1,16 @@
+image:
+  repository: mockexchange-posts-api
+
+ingress:
+  enabled: true
+
+database:
+  enabled: true
+  secret:
+    create: false
+
+oauth:
+  enabled: true
+  name: github
+  secret:
+    create: true

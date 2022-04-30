@@ -30,3 +30,14 @@ dependencies:
   - name: mockexchange-api
     version: 0.1.0
     repository: file://../mockexchange-api
+    import-values:
+      - parent: service
+        child: service
+      - parent: serviceAccount
+        child: serviceAccount
+      - parent: autoscaling
+        child: autoscaling
+      - parent: liveness
+        child: liveness
+      - parent: readiness
+        child: readiness
