@@ -83,7 +83,6 @@ affinity: {}
 extraEnv:
   - name: 'SOME_ENV'
     value: 'SOME_VALUE'
-
 readiness:
   initialDelaySeconds: ''
 liveness:

@@ -15,7 +15,9 @@ spec:
     metadata:
       annotations:
         checksum/database: {{ include (print $.Template.BasePath "/database-secret.yaml") . | sha256sum }}
+        {{- if .Values.oauth.enabled }}
         checksum/oauth: {{ include (print $.Template.BasePath "/oauth-secret.yaml") . | sha256sum }}
+        {{- end }}
       labels:
         {{- include "mockexchange-posts-api.selectorLabels" . | nindent 8 }}
     spec:
@@ -53,15 +55,13 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ include "mockexchange-posts-api.fullname" . }}-database
+            {{- if .Values.oauth.enabled }}
             - secretRef:
                 name: {{ include "mockexchange-posts-api.fullname" . }}-oauth
+            {{- end }}
           env:
             - name: SERVER_PORT
               value: '8080'
-            - name: POSTSAPI_COOKIEDOMAIN
-              value: {{ .Values.auth.cookieDomain }}
-            - name: POSTSAPI_LOGINSUCCESSURL
-              value: {{ .Values.auth.loginSuccessUrl }}
             - name: SERVER_SHUTDOWN
               value: graceful
             - name: SPRING_LIFECYCLE_TIMEOUT_PER_SHUTDOWN_PHASE
