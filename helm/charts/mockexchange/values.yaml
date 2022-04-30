@@ -3,16 +3,12 @@ mockexchange-posts-api:
   database:
     secret:
       create: false
-  image:
-    registry: docker.k8s.local
 
 mockexchange-comments-api:
   fullnameOverride: comments-api
   database:
     secret:
       create: false
-  image:
-    registry: docker.k8s.local
 
 database:
   secret:
