@@ -1,0 +1,6 @@
+dependencies:
+- name: mockexchange-common
+  repository: file://../mockexchange-common
+  version: 0.1.0
+digest: sha256:dea39a6f28c343cce4e9dc5d8e2c0510bf7e79d70b9cfc0a503d5a80a313e04e
+generated: "2022-04-30T11:17:54.224455612-04:00"

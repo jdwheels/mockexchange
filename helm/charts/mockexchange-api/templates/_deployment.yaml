@@ -1,0 +1,95 @@
+{{- define "mockexchange-api.deployment.tpl" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mockexchange-common.fullname" . }}
+  labels:
+    {{- include "mockexchange-common.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "mockexchange-common.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- if and .Values.database.enabled .Values.database.secret.create }}
+        checksum/database: {{ include (print $.Template.BasePath "/database-secret.yaml") . | sha256sum }}
+        {{- end }}
+        {{- if and .Values.oauth.enabled .Values.oauth.secret.create }}
+        checksum/oauth: {{ include (print $.Template.BasePath "/oauth-secret.yaml") . | sha256sum }}
+        {{- end }}
+      labels:
+        {{- include "mockexchange-common.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "mockexchange-common.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ include "mockexchange-common.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            {{- if .Values.liveness.initialDelaySeconds }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            {{- end }}
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+          readinessProbe:
+            {{- if .Values.readiness.initialDelaySeconds }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            {{- end }}
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+          envFrom:
+            {{- if .Values.database.enabled }}
+            - secretRef:
+                name: {{ include "mockexchange-common.datbaseSecretName" . }}
+            {{- end }}
+            {{- if .Values.oauth.enabled }}
+            - secretRef:
+                name: {{ include "mockexchange-common.oauthSecretName" . }}
+            {{- end }}
+          env:
+            - name: SERVER_PORT
+              value: '8080'
+            - name: SERVER_SHUTDOWN
+              value: graceful
+            - name: SPRING_LIFECYCLE_TIMEOUT_PER_SHUTDOWN_PHASE
+              value: 35s
+            {{- range .Values.extraEnv }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end -}}
+{{- define "mockexchange-api.deployment" -}}
+{{- include "mockexchange-common.util.merge" (append . "mockexchange-api.deployment.tpl") -}}
+{{- end -}}

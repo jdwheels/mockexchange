@@ -1,0 +1,26 @@
+mockexchange-posts-api:
+  fullnameOverride: posts-api
+  database:
+    enabled: true
+    secret:
+      create: false
+      name: mockexchange-database
+  oauth:
+    enabled: true
+    secret:
+      create: true
+  image:
+    registry: docker.k8s.local
+mockexchange-comments-api:
+  fullnameOverride: comments-api
+  database:
+    enabled: true
+    secret:
+      create: false
+      name: mockexchange-database
+  oauth:
+    enabled: false
+    secret:
+      create: false
+  image:
+    registry: docker.k8s.local

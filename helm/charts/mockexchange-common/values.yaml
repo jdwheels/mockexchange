@@ -1,0 +1,33 @@
+nameOverride:
+fullnameOverride:
+
+image:
+  registry:
+  repository:
+  tag:
+
+serviceAccount:
+  create:
+  name:
+
+database:
+  enabled:
+  secret:
+    name:
+    create:
+  username:
+  password:
+  url:
+  schema:
+oauth:
+  enabled:
+  secret:
+    name:
+    create: false
+  name:
+  clientId:
+  clientSecret:
+  redirectUri:
+
+abc:
+  xyz: ijk
