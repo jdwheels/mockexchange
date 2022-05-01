@@ -1,6 +1,6 @@
 dependencies:
 - name: mockexchange-api
   repository: file://../../helm/charts/mockexchange-api
-  version: 0.1.0
-digest: sha256:ed41a660331991dbca21d73475c5e4fd9095d1a7ecb9cfa43b4a0c97bde6acc2
-generated: "2022-04-30T15:22:52.753571605-04:00"
+  version: 0.1.1
+digest: sha256:7d66b871c9ec45a2eebe8b3af05c566b78d5fcd7f92cd269855ed46123d8a473
+generated: "2022-05-01T08:17:49.927900669-04:00"

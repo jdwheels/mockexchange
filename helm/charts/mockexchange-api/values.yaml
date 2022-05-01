@@ -45,7 +45,17 @@ ingress:
   enabled: false
   className: ""
   annotations: {}
-
+  domain:
+  tls:
+    enabled:
+    secretName:
+  path: /
+  pathType: ImplementationSpecific
+  additionalPaths:
+    - path: /
+      pathType: ImplementationSpecific
+      serviceName:
+      portNumber:
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -89,16 +99,3 @@ oauth:
   secret:
     create:
     name:
-
-ingressX:
-  domain:
-  tls:
-    enabled:
-    secretName:
-  path: /
-  pathType: ImplementationSpecific
-  additionalPaths:
-    - path: /
-      pathType: ImplementationSpecific
-      serviceName:
-      portNumber:

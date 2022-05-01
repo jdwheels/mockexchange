@@ -6,11 +6,11 @@ type: application
 
 dependencies:
   - name: mockexchange-posts-api
-    version: 0.1.0
+    version: ~0.1.0
     repository: file://../../../mockexchange-posts-api/helm
   - name: mockexchange-comments-api
-    version: 0.1.0
+    version: ~0.1.0
     repository: file://../../../mockexchange-comments-api/helm
   - name: mockexchange-common
-    version: 0.1.0
+    version: ~0.1.0
     repository: file://../mockexchange-common

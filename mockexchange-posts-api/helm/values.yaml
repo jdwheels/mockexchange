@@ -3,6 +3,8 @@ image:
 
 ingress:
   enabled: true
+  path: /
+  pathType: Prefix
 
 database:
   enabled: true

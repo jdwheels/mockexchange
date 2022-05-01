@@ -28,7 +28,7 @@ dependencies:
 #    version: 0.1.0
 #    repository: file://../../helm/charts/mockexchange-common
   - name: mockexchange-api
-    version: 0.1.0
+    version: ~0.1.1
     repository: file://../../helm/charts/mockexchange-api
     import-values:
       - parent: service
