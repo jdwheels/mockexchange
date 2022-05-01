@@ -5,6 +5,8 @@ ingress:
   enabled: true
   path: /
   pathType: Prefix
+  tls:
+    enabled: true
 
 database:
   enabled: true

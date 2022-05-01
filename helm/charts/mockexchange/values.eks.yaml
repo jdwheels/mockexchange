@@ -1,0 +1,36 @@
+database:
+  schema: test
+  secret:
+    create: true
+    name: mockexchange-database
+#  username:
+#  password:
+#  url:
+
+mockexchange-posts-api:
+#  oauth:
+#    clientId:
+#    clientSecret:
+#    redirectUri:
+  database:
+    secret:
+      name: mockexchange-database
+  ingress:
+#    domain: test.trivialepic.com
+    className: alb
+  resources:
+    requests:
+      cpu: '2'
+      memory: 3G
+
+mockexchange-comments-api:
+  database:
+    secret:
+      name: mockexchange-database
+  ingress:
+#    domain: test.trivialepic.com
+    className: alb
+  resources:
+    requests:
+      cpu: '2'
+      memory: 3G

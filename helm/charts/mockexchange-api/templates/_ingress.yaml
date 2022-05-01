@@ -8,15 +8,22 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "mockexchange-common.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
   annotations:
+    {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- end }}
+    {{ if eq $.Values.ingress.className "alb" }}
+    "alb.ingress.kubernetes.io/scheme": "internet-facing"
+    "alb.ingress.kubernetes.io/target-type": "ip"
+    {{ if $.Values.ingress.tls.enabled }}
+    "alb.ingress.kubernetes.io/listen-ports": "[{\"HTTPS\":443}]"
+    {{ end }}
+    {{ end }}
 spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
-  {{- if .Values.ingress.tls.enabled }}
+  {{- if and (ne .Values.ingress.className "alb") .Values.ingress.tls.enabled }}
   tls:
     - hosts:
         - {{ include "mockexchange-api.host" . }}
