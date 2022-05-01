@@ -21,6 +21,7 @@ class CommentsSecurityConfig(private val commentsApiProperties: CommentsApiPrope
 
         if (commentsApiProperties.cookieDomain != null) {
             serializer.setCookieName("SESSION_KEY")
+            serializer.setCookiePath("/")
             serializer.setDomainName(commentsApiProperties.cookieDomain)
         }
         return serializer

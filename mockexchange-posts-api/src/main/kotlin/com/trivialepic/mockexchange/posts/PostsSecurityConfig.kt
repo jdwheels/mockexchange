@@ -21,6 +21,7 @@ class PostsSecurityConfig(private val postsApiProperties: PostsApiProperties) {
 
         if (postsApiProperties.cookieDomain != null) {
             serializer.setCookieName("SESSION_KEY")
+            serializer.setCookiePath("/")
             serializer.setDomainName(postsApiProperties.cookieDomain)
         }
 //        serializer.setDomainName("domain.com")
@@ -50,7 +51,7 @@ class PostsSecurityConfig(private val postsApiProperties: PostsApiProperties) {
                     }
             }
             .exceptionHandling { e -> e.authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))}
-            .oauth2Login().defaultSuccessUrl(postsApiProperties.loginSuccessUrl ?: "/")
+            .oauth2Login().defaultSuccessUrl(postsApiProperties.loginSuccessUrl ?: "/", true)
 //            .httpBasic(withDefaults())
         return http.build()
     }

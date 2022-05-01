@@ -9,7 +9,7 @@ spring:
       enabled: false
   data:
     rest:
-      base-path: /api
+#      base-path: /api
       detection-strategy: annotated
       default-media-type: application/json
 server:

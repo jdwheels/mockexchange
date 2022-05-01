@@ -3,7 +3,7 @@ server:
 spring:
   data:
     rest:
-      base-path: /api
+#      base-path: /api
       detection-strategy: annotated
       default-media-type: application/json
 #  security:

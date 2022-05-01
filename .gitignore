@@ -1,3 +1,5 @@
+certs/
+
 **/charts/*.tgz
 _values.*.yaml
 .gradle
