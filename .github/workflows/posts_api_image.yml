@@ -6,7 +6,8 @@ on:
     paths:
       - '**/mockexchange-posts-api/**'
 jobs:
-  push_image:
+  push_posts_api_image:
+    name: Push Posts API Image
     uses: ./.github/workflows/deploy_api.yaml
     with:
       module: mockexchange-posts-api

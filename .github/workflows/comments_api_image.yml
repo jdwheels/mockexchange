@@ -2,12 +2,13 @@ name: Deploy Comments API
 on:
   push:
     branches:
-      - actions
-#    paths:
-#      - '**/mockexchange-comments-api/**'
+      - main
+    paths:
+      - '**/mockexchange-comments-api/**'
 jobs:
-  push_image:
-    uses: ./.github/workflows/deploy_api.yaml
+  push_comments_api_image:
+    name: Push Comments API Image
+    uses: ./.github/workflows/api_image.yaml
     with:
       module: mockexchange-comments-api
       ecr_repository: mockexchange-comments-api
