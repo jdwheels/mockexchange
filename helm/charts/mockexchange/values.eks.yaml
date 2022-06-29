@@ -1,0 +1,70 @@
+database:
+  secret:
+    create: true
+    name: mockexchange-database
+#  username:
+#  password:
+#  url:
+
+redis:
+  secret:
+    create: true
+    name: mockexchange-redis
+
+mockexchange-bff:
+  basePath: /bff
+  redis:
+    secret:
+      create: false
+      name: mockexchange-redis
+    enabled: true
+  ingress:
+    enabled: false
+    path: /bff
+    className: alb
+  resources:
+    requests:
+      cpu: '1'
+      memory: 1G
+  service:
+    type: ClusterIP
+mockexchange-posts-api:
+  basePath: ''
+#  oauth:
+#    clientId:
+#    clientSecret:
+#    redirectUri:
+  database:
+    secret:
+      name: mockexchange-database
+  ingress:
+    enabled: false
+    path: /
+#    domain: test.trivialepic.com
+    className: alb
+  resources:
+    requests:
+      cpu: '1'
+      memory: 1G
+  service:
+    type: ClusterIP
+mockexchange-comments-api:
+  basePath: ''
+  database:
+    secret:
+      name: mockexchange-database
+  ingress:
+    enabled: false
+    path: /
+#    domain: test.trivialepic.com
+    className: alb
+  resources:
+    requests:
+      cpu: '1'
+      memory: 1G
+  redis:
+    secret:
+      create: false
+      name: mockexchange-redis
+  service:
+    type: ClusterIP

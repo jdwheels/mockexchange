@@ -1,0 +1,25 @@
+image:
+  repository: mockexchange-bff
+
+ingress:
+  enabled: true
+  path: /
+  pathType: Prefix
+  tls:
+    enabled: true
+
+database:
+  enabled: false
+  secret:
+    create: false
+
+redis:
+  enabled: true
+  secret:
+    create: true
+
+oauth:
+  enabled: true
+  name: github
+  secret:
+    create: true

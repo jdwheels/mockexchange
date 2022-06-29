@@ -1,0 +1,6 @@
+dependencies:
+- name: mockexchange-common
+  repository: file://../../helm/charts/mockexchange-common
+  version: 0.1.2
+digest: sha256:3a391b9f4911c67d5e73e33e3c6c1cae176b6701c81fbfc40e40e5f46dbbaeab
+generated: "2022-05-10T07:07:51.349183418-04:00"

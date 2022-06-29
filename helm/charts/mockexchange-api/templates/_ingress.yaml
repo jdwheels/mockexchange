@@ -1,0 +1,62 @@
+{{- define "mockexchange-api.ingress.tpl" -}}
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "mockexchange-common.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "mockexchange-common.labels" . | nindent 4 }}
+  annotations:
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{ if eq $.Values.ingress.className "alb" }}
+    "alb.ingress.kubernetes.io/scheme": "internet-facing"
+    "alb.ingress.kubernetes.io/target-type": "ip"
+    {{ if $.Values.ingress.tls.enabled }}
+    "alb.ingress.kubernetes.io/listen-ports": "[{\"HTTPS\":443}]"
+    {{ end }}
+    {{ end }}
+spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  {{- if and (ne .Values.ingress.className "alb") .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ include "mockexchange-api.host" . }}
+      secretName: {{ include "mockexchange-api.tlsSecretName" . }}
+  {{- end }}
+  rules:
+    - host: {{ include "mockexchange-api.host" . }}
+      http:
+        paths:
+          {{ with .Values.ingress }}
+          - path: {{ .path }}
+            {{- if.pathType }}
+            pathType: {{ .pathType }}
+            {{- end }}
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          {{ range .additionalPaths }}
+          - path: {{ .path }}
+            {{- if .pathType }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ default $fullName .serviceName}}
+                port:
+                  number: {{ default $svcPort .portNumber }}
+            {{- end }}
+          {{- end }}
+        {{- end }}
+{{- end }}
+{{- end -}}
+{{- define "mockexchange-api.ingress" -}}
+{{- include "mockexchange-common.util.merge" (append . "mockexchange-api.ingress.tpl") -}}
+{{- end -}}

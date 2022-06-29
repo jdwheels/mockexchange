@@ -1,0 +1,27 @@
+spring:
+  data:
+    redis:
+      repositories:
+        enabled: false
+  session:
+    store-type: none
+  flyway:
+    locations:
+      - classpath:com/trivialepic/mockexchange/objects/db/migration/common
+      - classpath:com/trivialepic/mockexchange/objects/db/migration/{vendor}
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: test
+            client-secret: test
+#logging:
+#  level:
+#    io.r2dbc.h2: TRACE
+#    io.r2dbc.postgresql.QUERY: DEBUG # for queries
+#    io.r2dbc.postgresql.PARAM: DEBUG # for parameters
+logging:
+  level:
+    org.testcontainers: INFO
+    com.github.dockerjava: WARN

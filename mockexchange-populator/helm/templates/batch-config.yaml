@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mockexchange-common.fullname" . }}-batch
+  labels:
+    {{- include "mockexchange-common.labels" $ | nindent 4 }}
+  annotations:
+    "helm.sh/hook": "pre-install,pre-upgrade"
+    "helm.sh/hook-weight": "-6"
+    "helm.sh/hook-delete-policy": before-hook-creation
+{{- with .Values.batchFiles }}
+data:
+  {{- if .posts }}
+  MOCKEXCHANGE_POPULATOR_POSTS_FILE: 'file:{{ .posts }}'
+  {{- end }}
+  {{- if .postHistory }}
+  MOCKEXCHANGE_POPULATOR_POST_HISTORY_FILE: 'file:{{ .postHistory }}'
+  {{- end }}
+  {{- if .postLinks }}
+  MOCKEXCHANGE_POPULATOR_POST_LINKS_FILE: 'file:{{ .postLinks }}'
+  {{- end }}
+  {{- if .votes }}
+  MOCKEXCHANGE_POPULATOR_VOTES_FILE: 'file:{{ .votes }}'
+  {{- end }}
+  {{- if .tags }}
+  MOCKEXCHANGE_POPULATOR_TAGS_FILE: 'file:{{ .tags }}'
+  {{- end }}
+  {{- if .comments }}
+  MOCKEXCHANGE_POPULATOR_COMMENTS_FILE: 'file:{{ .comments }}'
+  {{- end }}
+  {{- if .users }}
+  MOCKEXCHANGE_POPULATOR_USERS_FILE: 'file:{{ .users }}'
+  {{- end }}
+  {{- if .badges }}
+  MOCKEXCHANGE_POPULATOR_BADGES_FILE: 'file:{{ .badges }}'
+  {{- end }}
+{{- end }}

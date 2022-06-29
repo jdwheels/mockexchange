@@ -1,0 +1,21 @@
+name: Comments API Image
+on:
+  workflow_dispatch:
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - '**/mockexchange-comments-api/**'
+jobs:
+  api_image:
+    name: Build and push image
+    uses: ./.github/workflows/api_image.yaml
+    with:
+      module: mockexchange-comments-api
+      ecr_repository: mockexchange-comments-api
+      tag: ${{ github.sha }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}

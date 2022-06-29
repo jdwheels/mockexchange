@@ -1,0 +1,9 @@
+server:
+  port: 8082
+spring:
+  jpa:
+    open-in-view: true
+  devtools:
+    livereload:
+      port: 32782
+

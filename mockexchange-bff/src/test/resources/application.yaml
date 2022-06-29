@@ -1,0 +1,13 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: testId
+            client-secret: testSecret
+bff-api:
+  post-api-base-url: http://localhost
+mockexchange-bff:
+  user-api:
+    base-url: ${bff-api.post-api-base-url}

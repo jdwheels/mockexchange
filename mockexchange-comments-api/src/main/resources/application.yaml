@@ -1,0 +1,19 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /posts-api
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: true
+    show-sql: true
+  devtools:
+    livereload:
+      enabled: false
+  data:
+    rest:
+      detection-strategy: annotated
+      default-media-type: application/json
+  session:
+    store-type: redis

@@ -1,0 +1,26 @@
+apiVersion: v2
+name: mockexchange
+version: 0.0.1
+appVersion: '0.0.1'
+type: application
+
+dependencies:
+  - name: mockexchange-posts-api
+    version: ~0.1.0
+    repository: file://../../../mockexchange-posts-api/helm
+  - name: mockexchange-comments-api
+    version: ~0.1.0
+    repository: file://../../../mockexchange-comments-api/helm
+  - name: mockexchange-bff
+    version: ~0.1.0
+    repository: file://../../../mockexchange-bff/helm
+  - name: mockexchange-common
+    version: ~0.1.0
+    repository: file://../mockexchange-common
+  - name: redis
+    repository: https://charts.bitnami.com/bitnami
+    version: ~16.9.0
+    condition: bitnamiRedis.enabled
+    alias: bitnami-redis
+    tags:
+      - redis

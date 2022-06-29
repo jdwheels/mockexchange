@@ -1,0 +1,13 @@
+query mockPosts($sortDir: Direction = ASC,
+    $offset: Int = 0,
+    $limit: Int = 20,
+    $sortBy: String = "id") {
+    mockPosts(sortDir: $sortDir,
+        offset: $offset,
+        limit: $limit,
+        sortBy: $sortBy) {
+        content {
+            id
+        }
+    }
+}

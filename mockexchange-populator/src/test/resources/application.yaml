@@ -1,0 +1,11 @@
+
+mockexchange:
+  populator:
+    post-links-file: classpath:test/PostLinks.xml
+    posts-file: classpath:test/Posts.xml
+    post-history-file: classpath:test/PostHistory.xml
+    votes-file: classpath:test/Votes.xml
+    tags-file: classpath:test/Tags.xml
+    users-file: classpath:test/Users.xml
+    badges-file: classpath:test/Badges.xml
+    comments-file: classpath:test/Comments.xml

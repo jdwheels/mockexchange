@@ -1,0 +1,29 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+build:
+  artifacts:
+    - image: docker.k8s.local/mockexchange-posts-api
+      custom:
+        buildCommand: |
+          gradle bootBuildImage --imageName=$IMAGE
+          docker push $IMAGE
+        dependencies:
+          paths:
+            - src/**
+            - build.gradle.kts
+deploy:
+  helm:
+    releases:
+      - name: mockexchange-posts-api
+        skipBuildDependencies: true
+        chartPath: helm
+        valuesFiles:
+          - helm/_values.local.yaml
+#        chartPath: ../helm/charts/mockexchange
+#        valuesFiles:
+#          - ../helm/charts/mockexchange/_values.local.yaml
+        artifactOverrides:
+          image: docker.k8s.local/mockexchange-posts-api
+        imageStrategy:
+          helm:
+            explicitRegistry: true

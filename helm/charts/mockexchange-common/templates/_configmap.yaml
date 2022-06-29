@@ -1,0 +1,13 @@
+{{- define "mylibchart.configmap.tpl" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    works: {{ .Values.abc.xyz }}
+    x: {{ .Values.database.username }}
+  name: {{ .Release.Name | printf "%s-%s" .Chart.Name }}
+data: {}
+{{- end -}}
+{{- define "mylibchart.configmap" -}}
+{{- include "mockexchange-common.util.merge" (append . "mylibchart.configmap.tpl") -}}
+{{- end -}}

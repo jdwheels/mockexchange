@@ -1,0 +1,18 @@
+dependencies:
+- name: mockexchange-posts-api
+  repository: file://../../../mockexchange-posts-api/helm
+  version: 0.1.0
+- name: mockexchange-comments-api
+  repository: file://../../../mockexchange-comments-api/helm
+  version: 0.1.0
+- name: mockexchange-bff
+  repository: file://../../../mockexchange-bff/helm
+  version: 0.1.0
+- name: mockexchange-common
+  repository: file://../mockexchange-common
+  version: 0.1.2
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.9.11
+digest: sha256:cd9777680a4272fb48339ab13579d41bc8ea5fc78b75d90512a114e934d0717c
+generated: "2022-05-29T08:55:47.14896143-04:00"

@@ -1,0 +1,9 @@
+apiVersion: v2
+name: mockexchange-populator
+type: application
+version: 0.0.1
+appVersion: 0.0.1
+dependencies:
+  - name: mockexchange-common
+    version: ~0.1.0
+    repository: file://../../helm/charts/mockexchange-common

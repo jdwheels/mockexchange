@@ -1,0 +1,3 @@
+{{- include "mockexchange-api.service" (list . "mockexchange-posts-api.service") -}}
+{{- define "mockexchange-posts-api.service" -}}
+{{- end -}}

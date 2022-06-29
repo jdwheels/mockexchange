@@ -1,0 +1,5 @@
+{{- if .Values.ingress.enabled -}}
+{{- include "mockexchange-api.ingress" (list . "mockexchange-posts-api.ingress") -}}
+{{- end -}}
+{{- define "mockexchange-posts-api.ingress" -}}
+{{- end -}}

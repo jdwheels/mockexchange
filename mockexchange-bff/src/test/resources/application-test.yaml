@@ -1,0 +1,12 @@
+spring:
+  session:
+    store-type: none
+  data:
+    redis:
+      repositories:
+        enabled: false
+    rest:
+      default-media-type:
+
+  cache:
+    type: redis

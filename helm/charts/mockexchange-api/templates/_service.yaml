@@ -1,0 +1,20 @@
+{{- define "mockexchange-api.service.tpl" -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mockexchange-common.fullname" . }}
+  labels:
+    {{- include "mockexchange-common.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type | default "NodePort" }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "mockexchange-common.selectorLabels" . | nindent 4 }}
+{{- end -}}
+{{- define "mockexchange-api.service" -}}
+{{- include "mockexchange-common.util.merge" (append . "mockexchange-api.service.tpl") -}}
+{{- end -}}

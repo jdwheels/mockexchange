@@ -1,0 +1,21 @@
+{{- define "mockexchange-api.gateway.tpl" -}}
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: {{ default (include "mockexchange-common.fullname" . ) .Values.istio.gatewayName }}
+spec:
+  {{- if and .Values.istio .Values.istio.ingressSelector }}
+  selector:
+    {{ .Values.istio.ingressSelector }}
+  {{- end }}
+  servers:
+    - hosts:
+        - {{ include "mockexchange-api.host" . }}
+      port:
+        protocol: HTTP
+        targetPort: 80
+        name: http
+{{- end -}}
+{{- define "mockexchange-api.gateway" -}}
+{{- include "mockexchange-common.util.merge" (append . "mockexchange-api.gateway.tpl") -}}
+{{- end -}}

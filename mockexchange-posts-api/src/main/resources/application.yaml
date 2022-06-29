@@ -1,0 +1,26 @@
+spring:
+  flyway:
+    locations:
+      - classpath:com/trivialepic/mockexchange/objects/db/migration/common
+      - classpath:com/trivialepic/mockexchange/objects/db/migration/{vendor}
+#  graphql:
+#    schema:
+#      printer:
+#        enabled: true
+#    graphiql:
+#      enabled: true
+  webflux:
+    base-path: /posts-api
+  r2dbc:
+    pool:
+      max-life-time: 60m
+  session:
+    store-type: redis
+  redis:
+    lettuce:
+      pool:
+        enabled: true
+        min-idle: 2
+  main:
+    web-application-type: reactive
+

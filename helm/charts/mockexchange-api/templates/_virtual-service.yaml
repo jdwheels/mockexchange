@@ -1,0 +1,20 @@
+{{- define "mockexchange-api.virtual-service.tpl" -}}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "mockexchange-common.fullname" . }}
+spec:
+  gateways:
+    - {{ default (include "mockexchange-common.fullname" . ) .Values.istio.gateway }}
+  hosts:
+    - {{ include "mockexchange-api.host" . }}
+  http:
+    - route:
+        - destination:
+            port:
+              number: {{ default .Values.istio.port 80 }}
+            host: {{ include "mockexchange-common.fullname" . }}
+{{- end -}}
+{{- define "mockexchange-api.virtual-service" -}}
+{{- include "mockexchange-common.util.merge" (append . "mockexchange-api.virtual-service.tpl") -}}
+{{- end -}}

@@ -1,0 +1,49 @@
+nameOverride: ''
+fullnameOverride: ''
+secretName: ''
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ''
+fetch:
+  enabled: true
+  fileName: stackexchange.7z
+  fromUrl: https://archive.org/download/stackexchange/softwareengineering.stackexchange.com.7z
+  download:
+    enabled: true
+    image: alpine/curl
+  extract:
+    enabled: true
+    path: ''
+    image: crazymax/7zip
+s3:
+  enabled: true
+  accessKeyId: ''
+  secretAccessKey: ''
+  endpointUrl: ''
+  secure: true
+  bucket: s3://mockexchange
+  image: amazon/aws-cli
+  upload:
+    path: ''
+    enabled: true
+  download:
+    path: ''
+    enabled: true
+image:
+  repository: ''
+  tag: ''
+batchFiles:
+  posts: /files/Posts.xml
+  postHistory: /files/PostHistory.xml
+  postLinks: /files/PostLinks.xml
+  votes: /files/Votes.xml
+  tags: /files/Tags.xml
+  comments: /files/Comments.xml
+  users: /files/Users.xml
+  badges: /files/Badges.xml
+database:
+  url: ''
+  username: ''
+  password: ''
+resources: {}

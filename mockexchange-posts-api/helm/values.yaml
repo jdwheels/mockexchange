@@ -1,0 +1,25 @@
+image:
+  repository: mockexchange-posts-api
+  pullPolicy: Always
+
+ingress:
+  enabled: false
+  path: /
+  pathType: Prefix
+  tls:
+    enabled: false
+
+database:
+  enabled: true
+  secret:
+    create: false
+
+redis:
+  enabled: false
+  secret:
+    create: false
+
+oauth:
+  enabled: false
+  secret:
+    create: false

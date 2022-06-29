@@ -1,0 +1,27 @@
+mockexchange-posts-api:
+  fullnameOverride: posts-api
+  database:
+    secret:
+      create: false
+
+mockexchange-comments-api:
+  fullnameOverride: comments-api
+  database:
+    secret:
+      create: false
+
+mockexchange-bff:
+  fullnameOverride: mockexchange-bff
+  redis:
+    secret:
+      create: false
+
+database:
+  secret:
+    create: true
+  username:
+  password:
+  url:
+
+bitnami-redis:
+  enabled: false

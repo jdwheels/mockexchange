@@ -1,0 +1,23 @@
+spring:
+  main:
+    web-application-type: reactive
+  session:
+    store-type: redis
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            scope:
+              - user:email
+              - read:user
+  cache:
+    type: redis
+management:
+  endpoint:
+    health:
+      group:
+        readiness:
+          include:
+            - redis
+            - diskspace
